@@ -31,7 +31,6 @@
  </info>
  <xi:include href="suppl_intro.xml"/>
  <chapter xml:id="cha-suppl-horizon-theme">
-<!--https://bugzilla.suse.com/show_bug.cgi?id=917622-->
   <title>Changing the &cloud; &dash; Theme</title>
   <para>
    The &cloud; &dash; theme can now be customized. The default &productname;
@@ -187,7 +186,7 @@
     <para>
      For a list of supported VM guests, refer to the &slsreg; &virtual;,
      section <citetitle>Supported VM Guests</citetitle>. It is available at
-     <link xlink:href="https://www.suse.com/documentation/sles-12/book_virt/data/virt_support_guests.html"/>.
+     <link xlink:href="https://documentation.suse.com/sles/12-SP5/single-html/SLES-virtualization/#virt-support-guests"/>.
     </para>
     <para>
      Depending on the virtualization platform on which you want to use the
@@ -204,7 +203,6 @@
        </para>
       </listitem>
      </varlistentry>
-<!--https://bugzilla.suse.com/show_bug.cgi?id=863876-->
      <varlistentry>
       <term>&xen;</term>
       <listitem>
@@ -359,18 +357,9 @@
      </para>
     </step>
    </procedure>
-
-   <para>
-    For more detailed information on how to build appliance images, refer to
-    the &suseonsite; documentation, available at
-    <link xlink:href="http://www.suse.com/documentation/suse_studio/"/>.
-   </para>
   </sect1>
   <sect1 xml:id="sec-adm-cli-img-props">
    <title>Image Properties</title>
-
-<!-- taroth 2013-08-29: fix for https://bugzilla.suse.com/show_bug.cgi?id=828862-->
-
    <para>
     Images have both contents and metadata. The latter are also called
     properties. The following properties can be attached to an image in
@@ -412,34 +401,6 @@
 <screen>qemu-img convert -O vpc&nbsp;<replaceable>CURRENT_IMAGE_FILE</replaceable>&nbsp;<replaceable>FINAL_IMAGE_FILE</replaceable>.vhd</screen>
     </step>
    </procedure>
-
-<!--taroth 2014-02-20: converting from raw to qcow2 should not be necessary anymore, still only
-    comenting the following step in case it is needed again-->
-
-<!--<step>
-    <para>
-    To convert the image to a different format, use either of the
-    following commands:
-    </para>
-    <itemizedlist>
-    <listitem>
-    <para>
-    For conversion from <literal>raw</literal> to
-    <literal>qcow2</literal>:
-    </para>
-    <screen>qemu-img convert -c -f raw -O&nbsp;qcow2&nbsp;\
-    <replaceable>CURRENT_IMAGE_FILE</replaceable>&nbsp;<replaceable>FINAL_IMAGE_FILE</replaceable>.qcow2</screen>
-    </listitem>
-    <listitem>
-    <para>
-    For conversion from <literal>raw</literal> or
-    <literal>qcow2</literal> to <literal>vhd</literal>:
-    </para>
-    <screen>qemu-img convert -O vpc&nbsp;<replaceable>CURRENT_IMAGE_FILE</replaceable>&nbsp;<replaceable>FINAL_IMAGE_FILE</replaceable>.vhd</screen>
-    </listitem>
-    </itemizedlist>
-    </step>-->
-
    <procedure xml:id="pro-adm-cli-img-upload">
     <title>Uploading Disk Images to &productname;</title>
     <para>
@@ -479,8 +440,6 @@
       example commands for different hypervisors below:
      </para>
      <itemizedlist mark="bullet" spacing="normal">
-<!--taroth 2014-20-21: CAVE, the same hypervisor-specific props are mentioned in 2 procedures:
-       pro.adm.cli.img.upload and pro.adm.cli.img.props.modify -->
       <listitem>
        <para>
         For &kvm;:
@@ -510,8 +469,6 @@
          HVM image import use <option>vm_mode=hvm</option>.
         </para>
        </note>
-<!--taroth 2013-10-17: Xen:
-        http://docserv.nue.suse.com/documents/SLES/SLES-xen/single-html/#sec.xen.config.disk-->
       </listitem>
       <listitem>
        <para>
@@ -523,8 +480,6 @@
   --property vmware_disktype="preallocated" \
   --property hypervisor_type=vmware \
   --disk-format vmdk&nbsp;--file&nbsp;<replaceable>PATH_TO_IMAGE_FILE</replaceable>.vmdk</screen>
-<!--taroth 2014-02-05: fix for https://bugzilla.suse.com/show_bug.cgi?id=862165#c3,
-        as discussed with mjura-->
        <note>
         <title>Value of <literal>vmware_disktype</literal></title>
         <para>
@@ -584,11 +539,6 @@
      </para>
     </step>
    </procedure>
-
-<!--taroth 2013-08-29: DEVs, is the following still true or can SUSE Studio inject any
-    files into an image which make it possible to change the image?- taroth 2013-10-01: for the records:
-    according to aj, studio can inject anything but it cannot change an image-->
-
    <note>
     <title>Updating Images</title>
     <para>
@@ -640,8 +590,6 @@
       hypervisors:
      </para>
      <itemizedlist mark="bullet" spacing="normal">
-<!--taroth 2014-20-21: CAVE, the same hypervisor-specific props are mentioned in 2 procedures:
-       pro.adm.cli.img.upload and pro.adm.cli.img.props.modify -->
       <listitem>
        <para>
         For &kvm;:
@@ -674,8 +622,6 @@
   --property&nbsp;vmware_adaptertype="lsiLogic" \
   --property vmware_disktype="preallocated" \
   --property hypervisor_type=vmware</screen>
-<!--taroth 2014-02-05: fix for https://bugzilla.suse.com/show_bug.cgi?id=862165#c3,
-        as discussed with mjura-->
        <note>
         <title>Value of <literal>vmware_disktype</literal></title>
         <para>
@@ -927,8 +873,7 @@
        For more details and a list of default flavors available, refer to the
        &cloudadmin;, chapter <citetitle>Dashboard</citetitle> or
        chapter <citetitle>OpenStack command-line clients</citetitle>, section
-       <citetitle>Manage Flavors</citetitle>. The guide is available from
-       &suse-onlinedoc;.
+       <citetitle>Manage Flavors</citetitle>.
       </para>
      </listitem>
     </varlistentry>
@@ -950,7 +895,7 @@
        For details, refer to the &clouduser;, chapter <citetitle>OpenStack
        dashboard</citetitle> or chapter <citetitle>OpenStack command-line
        clients</citetitle>, section <citetitle>Configure access and security
-       for instances</citetitle>. The guide is available from &suse-onlinedoc;.
+       for instances</citetitle>.
       </para>
      </listitem>
     </varlistentry>
@@ -966,7 +911,7 @@
        For details, refer to the &clouduser;, chapter <citetitle>OpenStack
        dashboard</citetitle> or chapter <citetitle>OpenStack command-line
        clients</citetitle>, section <citetitle>Configure access and security
-       for instances</citetitle>. The guide is available from &suse-onlinedoc;.
+       for instances</citetitle>.
       </para>
      </listitem>
     </varlistentry>
@@ -987,7 +932,6 @@
        &clouduser;, chapter <citetitle>OpenStack dashboard</citetitle> or
        chapter <citetitle>OpenStack command-line clients</citetitle>, section
        <citetitle>Launch and manage instances</citetitle>.
-       The guide is available from &suse-onlinedoc;. 
       </para>
       <itemizedlist>
        <listitem>
@@ -1024,12 +968,6 @@
     an Instance</citetitle></link>.
    </para>
   </sect1>
-  <!--taroth 2016-12-28: the following contents is now also covered in
-   http://docs.openstack.org/user-guide/dashboard-launch-instances.html
-   (also how to launch an instance from an empty volume), therefore commenting/
-   removing this section completely
-   <sect1>
-   <title>Launching Instances from Volumes</title>-->
  </chapter>
  <chapter xml:id="cha-user-dash-inst-access">
   <title>Configuring Access to the Instances</title>
@@ -1096,14 +1034,6 @@
       project&mdash;the maximum number of floating IP addresses per project is
       defined by the quota. From this set, you can then add a floating IP
       address to an instance of the project.
-<!--taroth 2013-07-05: check if to merge with the following, copied from
-          http://docs.openstack.org/api/openstack-network/2.0/content/router_ext_concepts.html:
-          A floating IP is an IP address on an external network, which is
-          associated with a  specific port, and optionally a specific IP
-          address, on a private OpenStack Networking network. Therefore a
-          floating IP allows access to an instance on a private network from
-          an external network. Floating IPs can only be defined on networks
-          for which the attribute router:external has been set to True.-->
      </para>
      <para>
       For information on how to assign floating IP addresses to instances, see
@@ -1175,15 +1105,6 @@
     otherwise). Unless you change the rules for the default group, those
     instances cannot be accessed from any IP addresses outside the cloud.
    </para>
-
-<!--taroth 2012-08-27: IIRC, I read this in upstream docs, but according to
-    bmwiedemann's tests, he could not access arbitrary ports of VMs in the same
-    security group, therefore commenting-->
-
-<!--Unless you change the rules for the default group, this means that
-    those instances are only accessible from IP addresses belonging to other members
-    of this group.-->
-
    <procedure xml:id="pro-cloud-dash-security-rules">
     <title>Configuring Security Group Rules</title>
     <para>
@@ -1212,8 +1133,6 @@
       Rules</guimenu> for the security group you want to modify. This opens the
       <guimenu> Security Group Rules</guimenu> screen that shows the existing
       rules for the group and lets you add or delete rules.
-<!-- <remark>taroth 2013-07-25: unfortunately, it does not allow to _edit_ rules, filed
-       https://bugs.launchpad.net/horizon/+bug/1210513 for this</remark>-->
      </para>
     </step>
     <step>
@@ -1401,7 +1320,7 @@
             <listitem>
      <para>
     Install the <package>openstack-magnum-k8s-image-x86_64</package> package. This
-    package provides a virtual machine image with Kubernetes pre-installed, 
+    package provides a virtual machine image with Kubernetes pre-installed,
     <filename>openstack-magnum-k8s-image.x86_64.qcow2</filename>. &ostack; &o_container;
     uses this image when creating clusters with its <filename>k8s_opensuse_v1</filename> driver.
      </para>
@@ -1427,12 +1346,6 @@
   --property os_distro='opensuse' \
   --container-format bare \
   --file /srv/tftpboot/files/openstack-magnum-k8s-image/openstack-magnum-k8s-image.x86_64.qcow2</screen>
-<!--glance image-create -/-name sles-openstack-magnum-kubernetes \
-    -/-visibility public \
-    -/-disk-format qcow2 \
-    -/-os-distro opensuse \
-    -/-container-format bare \
-    -/-file ./sles-openstack-magnum-kubernetes.x86_64.qcow2</screen>-->
    </step>
    <step xml:id="step-deploy-k8s-flavor-create">
     <para>
@@ -1440,8 +1353,6 @@
     </para>
  <screen>openstack flavor create --public m1.magnum --id 9 --ram 1024 \
    --disk 10 --vcpus 1</screen>
-    <!--# nova flavor-create -/-is-public true m1.magnum 9 1024 10 1 -->
-    <!--9 ID| 1024 memory_mb | 10 disk | 1 vcpu-->
     <para>
      If you do not have enough resources and RAM on your compute nodes for a
      flavor of this size, create a smaller flavor instead.
@@ -1552,7 +1463,7 @@
        </listitem>
        <listitem>
         <para>
-         <guimenu>Enable Registry</guimenu>: The cluster can be built with 
+         <guimenu>Enable Registry</guimenu>: The cluster can be built with
          Insecure Docker Registry service.
         </para>
        </listitem>

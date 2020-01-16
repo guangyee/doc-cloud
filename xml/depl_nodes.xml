@@ -267,8 +267,8 @@
      <para>
       This configuration option defines what to do with the cluster
       partition(s) that do not have the quorum. See
-      <link xlink:href="&suse-onlinedoc;/sle-ha-12/book_sleha/data/sec_ha_config_basics_global.html"/>,
-      section <citetitle>Option no-quorum-policy</citetitle> for details.
+      <link xlink:href="https://documentation.suse.com/sle-ha/12-SP5/single-html/SLE-HA-guide/#sec-conf-hawk2-cluster-config"/>,
+      for details.
      </para>
      <para>
       The recommended setting is to choose <guimenu>Stop</guimenu>. However,
@@ -289,7 +289,7 @@
       them from causing trouble. This mechanism is called &stonith;
       (<quote>Shoot the other node in the head</quote>). &stonith; can be
       configured in a variety of ways, refer to
-      <link xlink:href="&suse-onlinedoc;/sle-ha-12/book_sleha/data/cha_ha_fencing.html"/>
+      <link xlink:href="https://documentation.suse.com/sle-ha/12-SP5/single-html/SLE-HA-guide/#cha-ha-fencing"/>
       for details. The following configuration options exist:
      </para>
      <variablelist>
@@ -300,7 +300,7 @@
         <para>
          &stonith; will not be configured when deploying the &barcl;. It needs
          to be configured manually as described in
-         <link xlink:href="&suse-onlinedoc;/sle-ha-12/book_sleha/data/cha_ha_fencing.html"/>.
+         <link xlink:href="https://documentation.suse.com/sle-ha/12-SP5/single-html/SLE-HA-guide/#cha-ha-fencing"/>.
          For experts only.
         </para>
        </listitem>
@@ -364,7 +364,7 @@
 <screen>sbd -d /dev/<replaceable>SBD</replaceable> create</screen>
           <para>
            Refer to
-           <link xlink:href="&suse-onlinedoc;/sle-ha-12/book_sleha/data/sec_ha_storage_protect_fencing.html#pro_ha_storage_protect_sbd_create"/>
+           <link xlink:href="https://documentation.suse.com/sle-ha/12-SP5/single-html/SLE-HA-guide/#sec-ha-storage-protect-test"/>
            for details.
           </para>
          </listitem>
@@ -374,9 +374,6 @@
          respective kernel module to be used. Find the most commonly used
          watchdog drivers in the following table:
         </para>
-<!--taroth 2016-11-28: table taken from
-         https://github.com/SUSE/doc-sleha/blob/develop/xml/ha_storage_protection.xml,
-         pro.ha.storage.protect.watchdog-->
         <informaltable>
          <tgroup cols="2">
           <thead>
@@ -683,20 +680,6 @@
    </itemizedlist>
   </warning>
 
-<!--taroth 2017-02-01: commenting as it is still not possible to update this screenshot-->
-
-<!-- <figure>
-   <title>Available Clusters in the Deployment Section</title>
-   <mediaobject>
-    <imageobject role="fo">
-     <imagedata fileref="depl_barclamp_database_cluster_deployment.png" width="100%" format="png"/>
-    </imageobject>
-    <imageobject role="html">
-     <imagedata fileref="depl_barclamp_database_cluster_deployment.png" width="75%" format="png"/>
-    </imageobject>
-   </mediaobject>
-  </figure>-->
-
   <important>
    <title>Service Management on the Cluster</title>
    <para>
@@ -705,7 +688,7 @@
     an HA-managed service, nor configure it to start on boot. Services may only
     be started or stopped by using the cluster management tools Hawk or the crm
     shell. See
-    <link xlink:href="&suse-onlinedoc;/sle-ha-12/book_sleha/data/sec_ha_config_basics_resources.html"/>
+    <link xlink:href="https://documentation.suse.com/sle-ha/12-SP5/single-html/SLE-HA-guide/#sec-ha-config-basics-resources"/>
     for more information.
    </para>
   </important>
@@ -1384,161 +1367,6 @@ Verify return code: 18 (self signed certificate)
 Users in the LDAP-backed domain have to know the name of the domain in order to authenticate, and must use the  &o_ident; v3 API endpoint. (See the OpenStack manuals, <link xlink:href="https://docs.openstack.org/keystone/pike/admin/identity-domain-specific-config.html">Domain-specific Configuration</link> and <link xlink:href="https://docs.openstack.org/keystone/pike/admin/identity-integrate-with-ldap.html">Integrate Identity with LDAP</link>, for additional details.)
  </para>
 </sect2>
-
-
-
-  <!-- cs 2017-08-01: re https://bugzilla.suse.com/show_bug.cgi?id=1045314
-       do we want to give an LDAP example? Configuration is so variable,
-and admins can see the available options in the barclamp -->
-
-  <!-- fs 2017-05-04: Commenting per bsc#1037531
-       * no longer valid
-       * needs to be rewritten for SOC8, see
-         https://docs.openstack.org/admin-guide/identity-integrate-with-ldap.html
-
-  <sect2 xml:id="sec-depl-ostack-keystone-ldap">
-   <title>LDAP Authentication with &o_ident;</title>
-   <para>
-    <remark condition="clarity">
-     2015-01-21 - fs: TODO: bsc #914070
-    </remark>
-    By default &o_ident; uses an SQL database back-end store for
-    authentication. LDAP can be used in addition to the default, or as an
-    alternative. Using LDAP requires the &contrnode; on which
-    &o_ident; is installed to be able to contact the LDAP server. See
-    <xref linkend="sec-depl-inst-admserv-post-network"/> for instructions on how to
-    adjust the network setup.
-   </para>
-   <sect3 xml:id="sec-depl-ostack-keystone-ldap-ldap">
-    <title>Using LDAP for Authentication</title>
-    <para>
-     To configure LDAP as an alternative to the SQL database back-end store,
-     you need to open the &o_ident; &barcl; <guimenu>Attribute
-     </guimenu>configuration in <guimenu>Raw</guimenu> mode. Search for the
-     <guimenu>ldap</guimenu> section.
-    </para>
-    <figure xml:id="fig-keystone-ldap">
-     <title>The &o_ident; &Barcl;: Raw Mode</title>
-     <mediaobject>
-      <imageobject role="fo">
-       <imagedata fileref="depl_barclamp_keystone_raw.png" width="100%" format="png"/>
-      </imageobject>
-      <imageobject role="html">
-       <imagedata fileref="depl_barclamp_keystone_raw.png" width="75%" format="png"/>
-      </imageobject>
-     </mediaobject>
-    </figure>
-    <para>
-     Adjust the settings according to your LDAP setup. The default
-     configuration does not include all attributes that can be
-     set. You'll find a complete list of options is available in the file
-     <filename>/opt/dell/chef/data_bags/crowbar/bc-template-keystone.schema</filename>
-     on the &admserv; (search for <literal>ldap</literal>). There are
-     three types of attribute values: strings (for example, the value for
-     <literal>url</literal>:<literal>"ldap://localhost"</literal>), bool
-     (for example, the value for <literal>use_dumb_member</literal>:
-     <literal>false</literal>) and integer (for example, the value for
-     <literal>page_size</literal>: <literal>0</literal>). Attribute names
-     and string values always need to be quoted with double quotes; bool and
-     integer values must not be quoted.
-    </para>
-    <important>
-     <title>Using LDAP over SSL (ldaps) Is Recommended</title>
-     <para>
-      In a production environment you should use LDAP over SSL
-      (ldaps), otherwise passwords will be transferred as plain text.
-     </para>
-    </important>
-   </sect3>
-   <sect3 xml:id="sec-depl-ostack-keystone-ldap-hybrid">
-    <title>Using Hybrid Authentication</title>
-    <para>
-     The Hybrid LDAP back-end allows creating a mixed LDAP/SQL setup. This
-     is especially useful when an existing LDAP server should be used to
-     authenticate cloud users. The system and service users (administrators
-     and operators) needed to set up and manage &cloud; will be managed
-     in the local SQL database. Assignments of users to projects and roles
-     will also be stored in the local database.
-    </para>
-    <para>
-     In this scenario the LDAP Server can be read-only for &cloud;
-     installation, and no Schema modifications are required. Therefore
-     managing LDAP users from within &cloud; is not possible and must be done using your established tools for LDAP user management. All user
-     that are create with the &o_ident; command line client or the
-     Horizon Web UI will be stored in the local SQL database.
-    </para>
-    <para>
-     To configure hybrid authentication, proceed as follows:
-    </para>
-    <procedure>
-     <step>
-      <para>
-       Open the &o_ident; &barcl; <guimenu>Attribute
-       </guimenu>configuration in <guimenu>Raw</guimenu> mode (see
-       <xref linkend="fig-keystone-ldap"/>).
-      </para>
-     </step>
-     <step>
-      <para>
-       Set the identity and assignment drivers to the hybrid back-end:
-      </para>
-<screen> "identity": {
-    "driver": "hybrid"
-  },
-  "assignment": {
-    "driver": "hybrid"
-  }</screen>
-     </step>
-     <step>
-      <para>
-       Adjust the settings according to your LDAP setup in the
-       <guimenu>ldap</guimenu> section. Since the LDAP back-end is only used
-       to acquire information on users (but not on projects and roles),
-       only the user-related settings matter here. See the following
-       example of settings that may need to be adjusted:
-      </para>
-<screen>  "ldap": {
-    "url": "ldap://localhost",
-    "user": "",
-    "password": "",
-    "suffix": "cn=example,cn=com",
-    "user_tree_dn": "cn=example,cn=com",
-    "query_scope": "one",
-    "user_id_attribute": "cn",
-    "user_enabled_emulation_dn": "",
-    "tls_req_cert": "demand",
-    "user_attribute_ignore": "tenant_id,tenants",
-    "user_objectclass": "inetOrgPerson",
-    "user_mail_attribute": "mail",
-    "user_filter": "",
-    "use_tls": false,
-    "user_allow_create": false,
-    "user_pass_attribute": "userPassword",
-    "user_enabled_attribute": "enabled",
-    "user_enabled_default": "True",
-    "page_size": 0,
-    "tls_cacertdir": "",
-    "tls_cacertfile": "",
-    "user_enabled_mask": 0,
-    "user_allow_update": true,
-    "group_allow_update": true,
-    "user_enabled_emulation": false,
-    "user_name_attribute": "cn"
-    "group_ad_nesting": false,
-    "use_pool": true,
-    "pool_size": 10,
-    "pool_retry_max": 3
-  }</screen>
-      <para>
-       To access the LDAP server anonymously, leave the values for
-       <guimenu>user</guimenu> and <guimenu>password</guimenu> empty.
-      </para>
-     </step>
-    </procedure>
-   </sect3>
-  </sect2>
--->
-
   <sect2 xml:id="sec-depl-ostack-keystone-ha">
    <title>&haSetup; for &o_ident;</title>
    <para>
@@ -1556,17 +1384,6 @@ and admins can see the available options in the barclamp -->
    the data redundantly on a pool of &stornode;s&mdash;therefore &o_objstore;
    needs to be installed on at least two dedicated nodes.
   </para>
-
-<!--
-  <para>
-   It is recommended not to change the defaults in the &barcl; proposal,
-   unless you know exactly what you require. However you should change the
-   <guimenu>Cluster Admin Password</guimenu>. If you plan to change the
-   <guimenu>Zone</guimenu> value, it is important to know that you need at
-   least as many &stornode;s as <guimenu>Zones</guimenu>.
-  </para>
--->
-
   <para>
    To properly configure &o_objstore; it is important to understand how it
    places the data. Data is always stored redundantly within the hierarchy. The
@@ -1690,16 +1507,6 @@ and admins can see the available options in the barclamp -->
      </para>
     </listitem>
    </varlistentry>
-<!-- fs 2016-01-26: No longer present in Cloud6
-   <varlistentry>
-    <term>Cluster Admin Password</term>
-    <listitem>
-     <para>
-      The &o_objstore; administrator password.
-     </para>
-    </listitem>
-   </varlistentry>
-   -->
    <varlistentry>
     <term><guimenu>Debug</guimenu>
     </term>
@@ -2168,18 +1975,6 @@ and admins can see the available options in the barclamp -->
      </para>
     </listitem>
    </varlistentry>
-<!-- fs 2016-01-26: No longer present in Cloud6
-   <varlistentry>
-    <term><guimenu>API: Bind to All Addresses</guimenu>
-    </term>
-    <listitem>
-     <para>
-      Set this option to <guimenu>true</guimenu> to enable users to upload
-      images to &o_img;. If unset, only the operator can upload images.
-     </para>
-    </listitem>
-    </varlistentry>
-    -->
    <varlistentry>
     <term><guimenu>Caching</guimenu>
     </term>
@@ -4730,7 +4525,7 @@ neutron router-interface-add <replaceable>router2</replaceable> priv-net-sub</sc
   <para>
    For information on how to deploy a Kubernetes cluster (either from command
    line or from the &o_dash; &dash;), see the &cloudsuppl;. It is available
-   from <link xlink:href="https://www.suse.com/documentation/cloud"></link>.
+   from <link xlink:href="https://documentation.suse.com/soc/9/"></link>.
   </para>
 
   <para>
@@ -4745,7 +4540,6 @@ neutron router-interface-add <replaceable>router2</replaceable> priv-net-sub</sc
     <listitem>
      <para>
       Deploying Kubernetes clusters in a cloud without an Internet connection
-      (as described in <link xlink:href="https://www.suse.com/documentation/suse-openstack-cloud-7/singlehtml/book_cloud_suppl/book_cloud_suppl.html#sec.deploy.kubernetes.without">Deploying a Kubernetes Cluster Without Internet Access</link>))
       requires the <literal>registry_enabled</literal> option in its cluster
       template set to <literal>true</literal>. To make this offline scenario
       work, you also need to set the <guimenu>Delegate trust to cluster users if
@@ -6434,7 +6228,6 @@ Apply the &barcl; to a Control Node.
    &vmguest; one last step remains to be done&mdash;uploading an image to the
    &o_img; component. Refer to the &cloudsuppl;, chapter <citetitle>Manage
    images</citetitle>
-<!--<xref linkend="sec-adm-cli-img"/>-->
    for instructions. Images for &cloud; can be built in SUSE Studio. Refer to
    the &cloudsuppl;, section <citetitle>Building Images with
    &susestudio;</citetitle>.

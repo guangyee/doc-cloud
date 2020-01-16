@@ -1,0 +1,1016 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="urn:x-suse:xslt:profiling:docbook51-profile.xsl"
+ type="text/xml"
+ title="Profiling step"?>
+<!DOCTYPE chapter [
+ <!ENTITY % entities SYSTEM "entity-decl.ent"> %entities;
+]>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="poc-map-ui-steps">
+<title>Map User Interface Steps</title>
+<section xml:id="initialize-install-env">
+  <title>Initialize the Installer Environment</title>
+    <para>
+      In this section you initialize the installer environment and browse
+      to the installation UI.</para>
+  <procedure>
+    <step>
+      <para>
+        On the <literal>deployer01</literal> node, while logged in as the
+        <emphasis>ardana</emphasis> user and from the ardana user's home
+        directory, enter the following command to initialize the installer
+        environment:
+      </para>
+      <screen>ARDANA_INIT_AUTO=1 /usr/bin/ardana-init</screen>
+      <para>You should see some Ansible playbooks run resulting in green
+           <literal>ok=</literal> messages and yellow <literal>changed=</literal>
+           messages. If there are any red <literal>failed=</literal> messages,
+           review the output of the commands to determine the cause.</para>
+    </step>
+    <step>
+      <para>
+        On the<literal>deployer01</literal> node, open a web browser and point to:
+       </para>
+       <screen>http://localhost:9085</screen>
+       <para>
+        You should see the SUSE OpenStack Cloud Deployer screen.
+      </para>
+    </step>
+  </procedure>
+</section>
+
+<section xml:id="select-deploy-model">
+  <title>Select the Deployment Model</title>
+  <para>In this section you select the model to deploy the cloud.</para>
+    <procedure>
+      <step>
+        <para>
+          On the welcome screen of the SUSE OpenStack Cloud
+          Deployer, click <guimenu>Next</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          From the list of models, select an option to test.
+          We recommend using the Entry-Scale Cloud. For more information,
+          see <xref linkend="entry-scale-kvm"/> in the Deployment Guide.
+          Click <guimenu>Next</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the left, under <guimenu>Mandatory Components</guimenu>, select
+          <guimenu>Lifecycle Manager Nodes</guimenu>.
+          On the right, in the <guimenu>Edit number of nodes</guimenu> text
+          box enter: <literal>1</literal>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Under <guimenu>Mandatory Components</guimenu>, select
+          <guimenu>Controller Nodes</guimenu>.
+          On the right, in the <guimenu>Edit number of nodes</guimenu> text
+          box enter: <literal>1</literal>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the left, under <guimenu>Additional Components</guimenu>, select
+          <guimenu>Compute Nodes</guimenu>.
+          On the right, in the <guimenu>Edit minimum number of nodes</guimenu> text
+          box enter: <literal>1</literal>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Next</guimenu>.
+        </para>
+      </step>
+    </procedure>
+</section>
+
+<section xml:id="manage-cloud-settings">
+  <title>Manage Cloud Settings</title>
+    <procedure><title>Configure Cloud DNS, Hostnames and NTP</title>
+      <step>
+        <para>
+          On the next screen (<guimenu>Add Servers and Assign
+          Server Roles</guimenu>), in the top right, click
+          <guimenu>Manage Cloud Settings</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings</guimenu> window select
+          the <guimenu>Cloud Configuration tab</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Enter the following:
+        </para>
+        <screen>
+Host Name Prefix: ardana
+Host Member Prefix: -m
+DNS Name Servers: 192.168.200.1
+NTP Servers: 192.168.200.1
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Close the <guimenu>Manage Cloud Settings</guimenu> window.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure Disk Models</title>
+      <step>
+        <para>
+          On the top right, click <guimenu>Manage Cloud Settings</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings</guimenu> window select
+          the <guimenu>Disk Models</guimenu> tab.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings</guimenu> window select
+          the <guimenu>Disk Models</guimenu> tab.
+          You should see the following disk models listed:
+        </para>
+        <screen>
+COMPUTE-DISKS
+CONTROLLER-1TB-DISKS
+CONTROLLER-600GB-DISKS
+LIFECYCLE-MANAGER-DISKS
+        </screen>
+      </step>
+      <step>
+        <para>
+          If you do not see the <literal>LIFECYCLE-MANAGER-DISKS</literal>
+          listed, continue with the next task.
+          If you do see these interface models, review each model
+          configuration and make sure that it matches the configuration
+          specified here.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>OPTIONAL: Configure the Lifecycle Manager Disk Model</title>
+    <note>
+      <para>
+        Only continue with this procedure if you completed the above task
+        and did not see <literal>LIFECYCLE-MANAGER-DISKS</literal> listed.
+      </para>
+    </note>
+      <step>
+        <para>
+          Click <guimenu>Add disk model</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the right hand side, in the Disk model name field enter:
+        </para>
+        <screen>LIFECYCLE-MANAGER-DISKS</screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Add volume group</guimenu>.
+          Under <guimenu>Add volume group</guimenu>, enter the following:
+        </para>
+        <screen>
+Volume group name: ardana-vg
+Physical volume: /dev/sda_root
+        </screen>
+        <para>
+          To add a new logical volume, click: <guimenu>Add logical volume</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Under <guimenu>Add logical volume</guimenu>, enter the following:
+        </para>
+        <screen>
+Logical volume name: root
+Size: 80
+Mount: /
+File system type: ext4
+mkfs command options: (leave empty)
+        </screen>
+        <para>
+          To save the logical volume configuration, click <guimenu>Save</guimenu>.
+          Back under <guimenu>Logical volume</guimenu>
+          (under <guimenu>Add volume group</guimenu>) you should see the
+          new logical volume listed.</para>
+      </step>
+      <step>
+        <para>
+          To add another logical volume, click <guimenu>Add logical volume</guimenu>.
+          Under <guimenu>Add logical volume</guimenu>, enter the following:
+        </para>
+        <screen>
+Logical volume name: crash
+Size: 15
+Mount: /var/crash
+File system type: ext4
+mkfs command options: -O large_file
+        </screen>
+        <para>
+          To save the logical volume configuration, click <guimenu>Save</guimenu>.
+          You should see the new logical volume listed.
+        </para>
+      </step>
+      <step>
+        <para>
+          To save the volume group configuration, click <guimenu>Save</guimenu>.
+          You should see the new volume group listed.
+        </para>
+      </step>
+      <step>
+        <para>
+          To save the disk model configuration, click <guimenu>Save</guimenu>.
+          You should see the new disk model listed.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure NIC Mappings</title>
+      <step>
+        <para>
+          On the screen <guimenu>Server and Server Role
+          Summary</guimenu>, in the top right, click
+          <guimenu>Manage Cloud Settings</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings</guimenu> window select
+          the <guimenu>NIC mappings</guimenu> tab.
+          You should see the following disk models listed:
+        </para>
+        <screen>
+COMPUTE-6PORT
+CONTROLLER-6PORT
+LIFECYCLE-MANAGER-2PORT
+        </screen>
+      </step>
+      <step>
+        <para>
+          If you do not see any of these listed, continue with the next task.
+          If you do see these listed, review each NIC mapping
+          configuration and make sure that it matches the configuration
+          specified here.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>OPTIONAL: Configure Controller NIC Mappings</title>
+    <note>
+      <para>
+        Only continue with this procedure if you completed the above task
+        and did not see any NIC mappings listed.
+      </para>
+    </note>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings – NIC Mapping</guimenu>
+          window click <guimenu>Add NIC Mapping</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the right of that window, to create a NIC mapping for
+          the controller nodes, enter the following:
+        </para>
+        <screen>
+NIC Mapping Name: CONTROLLER-6PORT
+Port Logical Name: eth0
+PCI Address: 0000:00:03.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click the <guimenu>+</guimenu> on the right of the
+          port/PCI address line to add a second line.
+          Enter the following on the second line:
+        </para>
+        <screen>
+Port Logical Name: eth1
+PCI Address: 0000:00:07.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click the <guimenu>+</guimenu> on the right of the
+          port/PCI address line to add a third line.
+          Enter the following on the third line:
+        </para>
+        <screen>
+Port Logical Name: eth2
+PCI Address: 0000:00:08.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click the <guimenu>+</guimenu> on the right of the
+          port/PCI address line to add a forth line.
+          Enter the following on the forth line:
+        </para>
+        <screen>
+Port Logical Name: eth3
+PCI Address: 0000:00:10.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click the <guimenu>+</guimenu> on the right of the
+          port/PCI address line to add a fifth line.
+          Enter the following on the fifth line:
+        </para>
+        <screen>
+Port Logical Name: eth4
+PCI Address: 0000:00:11.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click the <guimenu>+</guimenu> on the right of the
+          port/PCI address line to add a fifth line.
+          Enter the following on the fifth line:
+        </para>
+        <screen>
+Port Logical Name: eth5
+PCI Address: 0000:00:12.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure Compute NIC Mappings</title>
+      <step>
+        <para>
+          Repeat the previous task to create a new NIC mapping for
+          the compute nodes using <literal>COMPUTE-6PORT</literal>
+          for the name.
+          Use the same port names and PCI addresses as the controllers.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure Lifecycle Manager NIC Mappings</title>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings – NIC Mapping</guimenu>
+          window click <guimenu>Add NIC Mapping</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the right of that window, to create a NIC mapping for
+          the controller nodes, enter the following:
+        </para>
+        <screen>
+NIC Mapping Name: LIFECYCLE-MANAGER-1PORT
+Port Logical Name: eth0
+PCI Address: 0000:00:03.0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure Interface Models</title>
+      <step>
+        <para>
+          On the <guimenu>Server and Server Role
+          Summary</guimenu> window, in the top right, click
+          <guimenu>Manage Cloud Settings</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the <guimenu>Manage Cloud Settings</guimenu> window select
+          the <guimenu>Interface Models</guimenu> tab.
+          You should see the following disk models listed:
+        </para>
+        <screen>
+COMPUTE-INTERFACES-3-BONDS
+CONTROLLER-INTERFACES-3-BONDS
+LIFECYCLE-MANAGER-INTERFACES-1-BOND
+        </screen>
+      </step>
+      <step>
+        <para>
+          If you do not see any of these interface models, continue with
+          the next task.
+          If you do see these interface models, review each model
+          configuration and make sure that it matches the configuration
+          specified here.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure the Lifecycle Manager Interface Model</title>
+      <step>
+        <para>
+          Click <guimenu>Add interface model</guimenu>.
+          In the Interface model field enter:
+        </para>
+        <screen>LIFECYCLE-MANAGER-INTERFACES-1-BOND</screen>
+      </step>
+      <step>
+        <para>
+          Under <guimenu>Interfaces</guimenu>, click
+          <guimenu>Add Network Interface</guimenu>.
+          Enter the following:
+        </para>
+        <screen>
+Network Interface Name: BOND0
+Network Devices: eth0
+Network Devices: eth1
+Forced Network Groups: None
+Network Groups: MANAGEMENT
+Bond device name: bond0
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure the Compute Node Interface Model</title>
+      <step>
+        <para>
+          On the right side of the <literal>COMPUTE-INTERFACES</literal>
+          network click the <guimenu>edit</guimenu> button.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the right, in the <guimenu>Edit Interface Model</guimenu>
+          section, under <guimenu>Interfaces</guimenu>, delete any existing
+          interfaces by clicking the trash can icon on their right.
+          When asked if you are sure, click <guimenu>Yes</guimenu>.</para>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Add Network Interface</guimenu>.
+          Enter the following:
+        </para>
+        <screen>
+Network Interface Name: BOND0
+Network Devices: eth0
+Network Devices: eth1
+Forced Network Groups: None
+Network Groups: MANAGEMENT
+Network Groups: GUEST
+Bond device name: bond0
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Add Network Interface</guimenu>.
+          Enter the following:
+        </para>
+        <screen>
+Network Interface Name: BOND1
+Network Devices: eth2
+Network Devices: eth3
+Forced Network Groups: None
+Network Groups: EXTERNAL-VM
+Bond device name: bond1
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Add Network Interface</guimenu>.
+          Enter the following:
+        </para>
+        <screen>
+Network Interface Name: BOND2
+Network Devices: eth4
+Network Devices: eth5
+Forced Network Groups: None
+Network Groups: STORAGE
+Bond device name: bond2
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+        </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          To save the Interface Model, click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+    </procedure>
+
+    <procedure><title>Configure the Controller Node Interface Model</title>
+    <step>
+      <para>
+        On the right side of the <literal>CONTROLLER-INTERFACES</literal>
+        network click the <guimenu>edit</guimenu> button.
+      </para>
+    </step>
+    <step>
+      <para>
+        On the right, in the <guimenu>Edit Interface Model</guimenu>
+        section, under <guimenu>Interfaces</guimenu>, delete any existing
+        interfaces by clicking the trash can icon on their right.
+        When asked if you are sure, click <guimenu>Yes</guimenu>.
+      </para>
+    </step>
+    <step>
+      <para>
+        Click <guimenu>Add Network Interface</guimenu>.
+        Enter the following:
+      </para>
+      <screen>
+Network Interface Name: BOND0
+Network Devices: eth0
+Network Devices: eth1
+Forced Network Groups: None
+Network Groups: MANAGEMENT
+Network Groups: GUEST
+Bond device name: bond0
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+      </screen>
+     </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Add Network Interface</guimenu>.
+          Enter the following:
+        </para>
+        <screen>
+Network Interface Name: BOND1
+Network Devices: eth2
+Network Devices: eth3
+Forced Network Groups: None
+Network Groups: EXTERNAL-API
+Network Groups: EXTERNAL-VM
+Bond device name: bond1
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+        </screen>
+        </step>
+        <step>
+          <para>
+            Click <guimenu>Add Network Interface</guimenu>.
+            Enter the following:
+          </para>
+          <screen>
+Network Interface Name: BOND2
+Network Devices: eth4
+Network Devices: eth5
+Forced Network Groups: None
+Network Groups: STORAGE
+Bond device name: bond2
+Bond options: miimon: 200
+              mode: active-backup
+              primary: eth0
+          </screen>
+          </step>
+        <step>
+          <para>
+            Click <guimenu>Save</guimenu>.
+          </para>
+        </step>
+        <step>
+          <para>
+            To save the Interface Model, click <guimenu>Save</guimenu>.
+          </para>
+        </step>
+    </procedure>
+
+    <procedure><title>Configure Networks</title>
+    <step>
+      <para>
+        On the <guimenu>Server and Server Role
+        Summary</guimenu> window, in the top right, click
+        <guimenu>Manage Cloud Settings</guimenu>.
+      </para>
+    </step>
+    <step>
+      <para>
+        On the <guimenu>Manage Cloud Settings</guimenu> window select
+        the <guimenu>Networks</guimenu> tab.
+      </para>
+    </step>
+    <step>
+      <para>
+        On the right side of the <literal>MANAGEMENT-NET</literal>
+        network click the <guimenu>edit</guimenu> button.
+      </para>
+    </step>
+      <step>
+        <para>
+          On the right, in the <guimenu>Edit Network</guimenu> area,
+          enter the following:
+        </para>
+       <screen>
+VLAN ID: (accept default)
+CIDR: 192.168.200.0/24
+Addresses: (leave empty)
+Gateway IP: 192.168.200.1
+Network Groups: MANAGEMENT
+Tagged VLAN: (unchecked)
+       </screen>
+      </step>
+      <step>
+        <para>
+          Click <guimenu>Save</guimenu>.
+        </para>
+      </step>
+      <step>
+        <para>
+          On the right side of the <literal>EXTERNAL-API-NET</literal>
+          network click the <guimenu>edit</guimenu> button.
+        </para>
+      </step>
+        <step>
+          <para>
+            On the right, in the <guimenu>Edit Network</guimenu> area,
+            enter the following:
+          </para>
+         <screen>
+VLAN ID: (accept default)
+CIDR: 192.168.201.0/24
+Addresses: (leave empty)
+Gateway IP: 192.168.201.1
+Network Groups: EXTERNAL-API
+Tagged VLAN: (unchecked)
+         </screen>
+        </step>
+        <step>
+          <para>
+            Click <guimenu>Save</guimenu>.
+          </para>
+        </step>
+        <step>
+          <para>
+            On the right side of the <literal>EXTERNAL-VM-NET</literal>
+            network click the <guimenu>edit</guimenu> button.
+          </para>
+        </step>
+          <step>
+            <para>
+              On the right, in the <guimenu>Edit Network</guimenu> area,
+              enter the following:
+            </para>
+           <screen>
+VLAN ID: (accept default)
+CIDR: (leave empty)
+Addresses: (leave empty)
+Gateway IP: (leave empty)
+Network Groups: EXTERNAL-VM
+Tagged VLAN: (unchecked)
+           </screen>
+          </step>
+          <step>
+            <para>
+              Click <guimenu>Save</guimenu>.
+            </para>
+          </step>
+          <step>
+            <para>
+              On the right side of the <literal>GUEST-NET</literal>
+              network click the <guimenu>edit</guimenu> button.
+            </para>
+          </step>
+            <step>
+              <para>
+                On the right, in the <guimenu>Edit Network</guimenu> area,
+                enter the following:
+              </para>
+             <screen>
+VLAN ID: (accept default)
+CIDR: 192.168.203.0/24
+Addresses: (leave empty)
+Gateway IP: 192.168.203.1
+Network Groups: GUEST
+Tagged VLAN: (unchecked)
+             </screen>
+            </step>
+            <step>
+              <para>
+                Click <guimenu>Save</guimenu>.
+              </para>
+            </step>
+            <step>
+              <para>
+                On the right side of the <literal>STORAGE-NET</literal>
+                network click the <guimenu>edit</guimenu> button.
+              </para>
+            </step>
+              <step>
+                <para>
+                  On the right, in the <guimenu>Edit Network</guimenu> area,
+                  enter the following:
+                </para>
+               <screen>
+VLAN ID: (accept default)
+CIDR: 192.168.204.0/24
+Addresses: (leave empty)
+Gateway IP: 192.168.204.1
+Network Groups: STORAGE
+Tagged VLAN: (unchecked)
+               </screen>
+              </step>
+              <step>
+                <para>
+                  Click <guimenu>Save</guimenu>.
+                </para>
+              </step>
+            <step>
+              <para>
+                Close the <guimenu>Manage Cloud Settings</guimenu> window.
+              </para>
+            </step>
+    </procedure>
+</section>
+
+
+<section xml:id="deploy-sles">
+  <title>Deploy SLES on the Cloud Servers</title>
+  <para>
+    This exercise deploys SLES on the cloud node servers.
+  </para>
+ <procedure><title>Manage Subnet and Netmask</title>
+   <step>
+     <para>
+       On the <guimenu>Add Servers and Assign
+       Server Roles</guimenu> window, in the top right, click
+       <guimenu>Manage Subnet and Netmask</guimenu>.
+     </para>
+   </step>
+   <step>
+     <para>
+       On the <guimenu>Manage Subnet and Netmask</guimenu> screen enter
+       the values for the management network:
+     </para>
+     <screen>
+Subnet: 192.168.200.0
+Netmask: 255.255.255.0
+     </screen>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Save</guimenu>.
+     </para>
+   </step>
+ </procedure>
+
+ <procedure><title>Edit the Lifecycle Manager Server</title>
+   <step>
+     <para>
+       If the list of servers in <literal>cluster0</literal> is not
+       displayed, click on the <literal>cluster0</literal> bar on the right to
+       expand the list of servers.
+     </para>
+   </step>
+   <step>
+     <para>
+       Edit the deployer node by clicking on the edit button.
+     </para>
+   </step>
+   <step>
+     <para>
+       On the <guimenu>Edit Server Details</guimenu> window for the deloyer
+       node, enter the following:
+     </para>
+     <screen>
+ID: deployer
+
+IP Address: 192.168.200.10
+Server Group: RACK1
+NIC Mapping: LIFECYCLE-MANAGER-2PORT
+
+MAC Address: 52:54:00:00:01:01
+IPMI IP Address: (leave empty)
+IPMI Username: (leave empty)
+IPMI Password: (leave empty)
+     </screen>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Done</guimenu>.
+     </para>
+   </step>
+ </procedure>
+
+ <procedure><title>Edit the Controller Servers</title>
+   <step>
+     <para>
+       On the <guimenu>Add Servers and Assign
+       Server Roles</guimenu> window if the list of servers in <literal>cluster1</literal>
+       is not displayed, click on the <literal>cluster1</literal> bar on the right to
+       expand the list of servers.
+    </para>
+   </step>
+   <step>
+     <para>
+       Edit the first controller node by clicking on the edit button.
+     </para>
+   </step>
+   <step>
+     <para>
+       On the <guimenu>Edit Server Details</guimenu> window for the first
+       controller02 node, enter the following:
+     </para>
+     <screen>
+ID: controller02
+
+IP Address: 192.168.200.12
+Server Group: RACK1
+NIC Mapping: CONTROLLER-6PORT
+
+MAC Address: 52:54:00:00:a2:01
+IPMI IP Address: 192.168.199.12
+IPMI Username: admin
+IPMI Password: password
+     </screen>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Done</guimenu>.
+     </para>
+   </step>
+   <step>
+     <para>
+       If there are any additional controller nodes listed, delete the
+       additional controller nodes from the list by clicking on the
+       trash can icon on their right.
+       Click <guimenu>Yes</guimenu> when asked if you are sure you want
+       to delete them.
+     </para>
+   </step>
+ </procedure>
+
+ <procedure><title>Edit the Compute Servers</title>
+   <step>
+     <para>
+       On the <guimenu>Add Servers and Assign
+       Server Roles</guimenu> if the list of servers in <literal>compute</literal>
+       is not displayed, click on the <literal>compute</literal> bar on the right to
+       expand the list of servers.
+     </para>
+   </step>
+   <step>
+     <para>
+       Edit the first compute node by clicking on the edit button.
+     </para>
+   </step>
+   <step>
+     <para>
+       On the <guimenu>Edit Server Details</guimenu> window for the first
+       compute node, enter the following:
+     </para>
+     <screen>
+ID: compute03
+
+IP Address: 192.168.200.23
+Server Group: RACK1
+NIC Mapping: COMPUTE-6PORT
+
+MAC Address: 52:54:00:00:c3:01
+IPMI IP Address: 192.168.199.23
+IPMI Username: admin
+IPMI Password: password
+     </screen>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Done</guimenu>.
+     </para>
+   </step>
+   <step>
+     <para>
+       If there are any additional compute nodes listed, delete the
+       additional compute nodes from the list by clicking on the
+       trash can icon on their right.
+       Click <guimenu>Yes</guimenu> when asked if you are sure you want
+       to delete them.
+     </para>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Next</guimenu>.
+     </para>
+   </step>
+ </procedure>
+
+ <procedure><title>Install SLES on the Cloud Servers</title>
+   <step>
+     <para>
+       On the <guimenu>Choose servers on which SLES will be installed</guimenu>
+       window, enter the following:
+     </para>
+     <screen>Password: linux</screen>
+   </step>
+   <step>
+     <para>
+       To move the controller and compute severs displayed in the
+       <guimenu>Available Servers</guimenu> box on the left to the
+       <guimenu>Selected Servers</guimenu> box on the right, click the
+       <guimenu>></guimenu> icon between the boxes.
+
+       You should see the controller and computer servers in the right
+       box now instead of the left box.
+     </para>
+     <warning>
+       <para>Do not move the deployer server to the right.</para>
+     </warning>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Install</guimenu>.
+       When asked if you want to continue, click <guimenu>Yes</guimenu>.
+     </para>
+   </step>
+   <step>
+     <para>
+       When the servers finish installing, click <guimenu>Next</guimenu>.
+     </para>
+   </step>
+   <step>
+     <para>
+       On the <guimenu>Server and server role summary</guimenu> window,
+       in the upper right hand side, click <guimenu>Expand all</guimenu> to
+       review the configuration proposals for the servers.
+     </para>
+   </step>
+   <step>
+     <para>
+       Click <guimenu>Next</guimenu>.
+     </para>
+   </step>
+ </procedure>
+
+ <procedure><title>Verify Server Configuration Parameters</title>
+   <step>
+     <para>
+       On the <guimenu>Server and server role summary</guimenu> window,
+       click <guimenu>Expand all</guimenu>.
+       You should see all of the servers, their roles, IDs, IP addresses,
+       Server groups, NIC Mappings and MAC Addresses.
+     </para>
+   </step>
+   <step>
+     <para>
+       If any issues are present, fix them here before moving on.
+     </para>
+   </step>
+   <step>
+     <para>
+       When all server configuration parameters have been verified or
+       fixed click <guimenu>Next</guimenu>.
+     </para>
+   </step>
+ </procedure>
+</section>
+</chapter>
